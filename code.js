@@ -1,5 +1,4 @@
 // Steps to complete:
-
 // 1. Initialize Firebase
 // 2. Create button for adding new trains - then update the html + update the database
 // 3. Create a way to retrieve trains from the train database.
