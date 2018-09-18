@@ -26,7 +26,7 @@ $("#add-train-btn").on("click", function(event) {
   // Grabs user input
   var trainName = $("#train-name-input").val().trim();
   var trainDestination = $("#destination-input").val().trim();
-  var trainStart = moment($("#time-input").val().trim(), "HH:mm").format("X");
+  var trainStart = moment($("#time-input").val().trim(), "hh:mm a").format("X");
   var trainFrequency = $("#period-input").val().trim();
 
   // Creates local "temporary" object for holding train data
