@@ -26,7 +26,7 @@ $("#add-train-btn").on("click", function(event) {
   // Grabs user input
   var trainName = $("#train-name-input").val().trim();
   var trainDestination = $("#destination-input").val().trim();
-  var trainStart = moment($("#time-input").val().trim(), "hh:mm a").format("X");
+  var trainStart = moment($("#time-input").val().trim(), "HH:mm").format("X");
   var trainFrequency = $("#period-input").val().trim();
 
   // Creates local "temporary" object for holding train data
@@ -62,36 +62,35 @@ database.ref().on("child_added", function(childSnapshot) {
   console.log(childSnapshot.val());
 
   // Store everything into a variable.
-  var trainName = childSnapshot.val().name;
-  var trainDestination = childSnapshot.val().destination;
-  var trainStart = childSnapshot.val().start;
-  var trainFrequency = childSnapshot.val().frequency;
+  var newtrainName = childSnapshot.val().name;
+  var newtrainDestination = childSnapshot.val().destination;
+  var newtrainStart = childSnapshot.val().start;
+  var newtrainFrequency = childSnapshot.val().frequency;
 
   // Employee Info
-  console.log(trainName);
-  console.log(trainDestination);
-  console.log(trainStart);
-  console.log(trainFrequency);
+  console.log(newtrainName);
+  console.log(newtrainDestination);
+  console.log(newtrainStart);
+  console.log(newtrainFrequency);
 
-  // Calculate the months worked using hardcore math
   // To calculate the difference between the first train time and current time
-  var trainMinutes = moment(trainStart, "hh: mm a").diff(moment(),"minutes");
+  var trainMinutes = moment().diff(moment(newtrainStart, "X"), "minutes");
   console.log(trainMinutes);
 
   // Calculate minutes away and next Arrival
-  var minutesAway = trainFrequency-trainMinutes % trainFrequency;
+  var minutesAway = newtrainFrequency-trainMinutes % newtrainFrequency;
   console.log(minutesAway);
 
   var nextArrive = parseInt(moment().format("X")) + (minutesAway*60);
   console.log(nextArrive);
-  var nextArrival = moment(nextArrive, "X").format("hh:mm a");
+  var nextArrival = moment(nextArrive, "X").format("HH: mm");
   console.log(nextArrival);
 
   // Create the new row
   var newRow = $("<tr>").append(
-    $("<td>").text(trainName),
-    $("<td>").text(trainDestination),
-    $("<td>").text(trainFrequency),
+    $("<td>").text(newtrainName),
+    $("<td>").text(newtrainDestination),
+    $("<td>").text(newtrainFrequency),
     $("<td>").text(nextArrival),
     $("<td>").text(minutesAway),
   );
